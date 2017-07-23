@@ -1,0 +1,105 @@
+{
+  "project_info": {
+    "project_number": "775937462365",
+    "firebase_url": "https://smartowl-d1bbd.firebaseio.com",
+    "project_id": "smartowl-d1bbd",
+    "storage_bucket": "smartowl-d1bbd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:775937462365:android:fcfef757a832647b",
+        "android_client_info": {
+          "package_name": "com.google.firebase.quickstart.database"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "775937462365-7n5ec2pvrt5ua27qpnkombgk8q23ir1q.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.google.firebase.quickstart.database",
+            "certificate_hash": "66e0549d66e3fda9060e89d54074e4188418c6e6"
+          }
+        },
+        {
+          "client_id": "775937462365-4qmo8snk47e9o222akpiqfd708ap1ru0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAVhbAaengPndfuVMbhFuVC6yzkkhVcCXA"
+        },
+        {
+          "current_key": "AIzaSyBykVKELvB1VYNSnS6vKAu2HrZb57uZ8zI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "775937462365-4qmo8snk47e9o222akpiqfd708ap1ru0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:775937462365:android:c62172561cccdb29",
+        "android_client_info": {
+          "package_name": "tw.com.smartowl.smartowl"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "775937462365-37gjubg1hum5en27gqj1qikmv70qd9si.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "tw.com.smartowl.smartowl",
+            "certificate_hash": "66e0549d66e3fda9060e89d54074e4188418c6e6"
+          }
+        },
+        {
+          "client_id": "775937462365-4qmo8snk47e9o222akpiqfd708ap1ru0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAVhbAaengPndfuVMbhFuVC6yzkkhVcCXA"
+        },
+        {
+          "current_key": "AIzaSyBykVKELvB1VYNSnS6vKAu2HrZb57uZ8zI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "775937462365-4qmo8snk47e9o222akpiqfd708ap1ru0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
