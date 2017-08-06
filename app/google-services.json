@@ -62,6 +62,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "775937462365-gg01m3vb96biumkp14kap5ivm3ov4ld9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "tw.com.smartowl.smartowl",
+            "certificate_hash": "16214bee5618979bb4401344f698fa42fa5ff793"
+          }
+        },
+        {
           "client_id": "775937462365-37gjubg1hum5en27gqj1qikmv70qd9si.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
