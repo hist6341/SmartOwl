@@ -1,24 +1,20 @@
 package tw.com.smartowl.smartowl;
 
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.SearchManager;
+
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
+
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.ListFragment;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -29,23 +25,36 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Locale;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends Navigation_BaseActivity {
 
     private String TAG = "MainActivity";
     private ArrayList<Product> list = new ArrayList<>();
     ArrayAdapter<String> adapter;
     DatabaseReference reference_contacts = FirebaseDatabase.getInstance().getReference("Products");
 
-
+    //private ViewPager myViewPager;
+    //private TabLayout tabLayout;
+    private int[] IconResID = {R.drawable.selector_one,R.drawable.selector_two,R.drawable.selector_three};
+    private int[] TollBarTitle = {R.string.friend,R.string.setting,R.string.contact};
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+        //myViewPager = (ViewPager) findViewById(R.id.myViewPager);
+        //tabLayout = (TabLayout) findViewById(R.id.TabLayout);
+
+        toolbar.setTitle("SmartOwl");//設置ToolBar Title
+        setUpToolBar();//使用父類別的setUpToolBar()，設置ToolBar
+        CurrentMenuItem = 0;//目前Navigation項目位置
+        NV.getMenu().getItem(CurrentMenuItem).setChecked(true);//設置Navigation目前項目被選取狀態
+        //setViewPager();
+        //tabLayout.setupWithViewPager(myViewPager);
 
         ///////////////////////////////////////////////////////////////////////////
 
@@ -72,6 +81,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+
+
 
 
 
@@ -114,5 +126,9 @@ public class MainActivity extends AppCompatActivity {
         }
 
     };
+
+
+
+
 }
 

@@ -46,10 +46,6 @@
         <activity android:name=".CreateProduct" />
         <activity android:name=".ProductActivity" />
         <activity android:name=".WikitudeActivity" />
-        <activity
-            android:name=".DrawerLayoutActivity"
-            android:label="@string/title_activity_drawer_layout"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
