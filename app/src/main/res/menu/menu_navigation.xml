@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/navItemOne"
+            android:icon="@drawable/common_google_signin_btn_icon_dark"
+            android:title="View_one" />
+        <item
+            android:id="@+id/navItemAbout"
+            android:icon="@drawable/common_google_signin_btn_icon_light"
+            android:title="About"/>
+        <item
+            android:id="@+id/navItemLogout"
+            android:icon="@drawable/common_google_signin_btn_text_dark"
+            android:title="Logout"/>
+    </group>
+</menu>
