@@ -4,26 +4,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:layout_editor_absoluteY="25dp"
+    android:orientation="vertical"
     tools:layout_editor_absoluteX="0dp"
-    android:orientation="vertical">
+    tools:layout_editor_absoluteY="25dp">
 
-    <ListView
-        android:id="@+id/list"
-        android:layout_width="320dp"
-        android:layout_height="551dp"
-        tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="8dp" />
+    <include
+        layout="@layout/include_main_listview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
     <android.support.design.widget.FloatingActionButton
-        android:layout_width="wrap_content"
+        android:id="@+id/floatingActionButton"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
         android:onClick="go_createProduct"
         android:src="@drawable/ic_image_edit"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginRight="8dp"
         app:layout_constraintRight_toRightOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

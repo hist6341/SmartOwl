@@ -3,37 +3,20 @@ package tw.com.smartowl.smartowl;
 
 import android.content.Intent;
 import android.os.Bundle;
-
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.ListFragment;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
-import java.util.ArrayList;
 
 
 public class MainActivity extends Navigation_BaseActivity {
 
-    private String TAG = "MainActivity";
-
-
     DatabaseReference reference_contacts = FirebaseDatabase.getInstance().getReference("Products");
-
+    private String TAG = "MainActivity";
     //private ViewPager myViewPager;
     //private TabLayout tabLayout;
     private int[] IconResID = {R.drawable.selector_one,R.drawable.selector_two,R.drawable.selector_three};
@@ -105,37 +88,7 @@ public class MainActivity extends Navigation_BaseActivity {
     }
 
 
-    ValueEventListener fileListener =new ValueEventListener() {
-        @Override
-        public void onDataChange(DataSnapshot dataSnapshot) {
-            adapter.clear();
-            list.clear();
-            Log.i("Adapter: ","Clear");
-            for (DataSnapshot ds : dataSnapshot.getChildren() ){
-                Product product = ds.getValue(Product.class);
-                if (current_category == "所有商品") {
-                    adapter.add(ds.child("name").getValue().toString());
-                    Log.i("Key",ds.child("name").getValue().toString());
-                    list.add(product);
-                }
 
-                else {
-                    if (product.category == current_category) {
-                        adapter.add(ds.child("name").getValue().toString());
-                        Log.i("Key",ds.child("name").getValue().toString());
-                        list.add(product);
-                    }
-                }
-
-            }
-        }
-
-        @Override
-        public void onCancelled(DatabaseError databaseError) {
-
-        }
-
-    };
 
 
 

@@ -1,44 +1,73 @@
 package tw.com.smartowl.smartowl;
 
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.support.annotation.LayoutRes;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.FrameLayout;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  * Created by MING on 2017/8/6.
  */
 public class Navigation_BaseActivity extends AppCompatActivity {
-    private DrawerLayout DL;
-    private Menu MU;
     //private FrameLayout FL;
     protected NavigationView NV;
     protected Toolbar toolbar;
     protected int CurrentMenuItem = 0;//紀錄目前User位於哪一個項目
-
     ArrayAdapter<String> adapter;
     ArrayList<Product> list = new ArrayList<>();
     String current_category = "所有商品";
-
     DatabaseReference reference_contacts = FirebaseDatabase.getInstance().getReference("Products");
+    DataSnapshot dataSnapshot;
+    ValueEventListener fileListener =new ValueEventListener() {
+        @Override
+        public void onDataChange(DataSnapshot dataSnapshot) {
+            adapter.clear();
+            list.clear();
+            Log.i("Adapter: ","Clear");
+            for (DataSnapshot ds : dataSnapshot.getChildren() ){
+                Product product = ds.getValue(Product.class);
+                if (Objects.equals(current_category, "所有商品")) {
+                    adapter.add(ds.child("name").getValue().toString());
+                    Log.i("Key",ds.child("name").getValue().toString());
+                    list.add(product);
+                }
+
+                else {
+                    if (Objects.equals(product.category, current_category)) {
+                        adapter.add(ds.child("name").getValue().toString());
+                        Log.i("Key",ds.child("name").getValue().toString());
+                        list.add(product);
+                    }
+                }
+
+            }
+        }
+
+        @Override
+        public void onCancelled(DatabaseError databaseError) {
+
+        }
+
+    };
+    private DrawerLayout DL;
+    private Menu MU;
 
     @Override
     public void setContentView(@LayoutRes int layoutResID) {
@@ -59,6 +88,7 @@ public class Navigation_BaseActivity extends AppCompatActivity {
         MU.add("3C區");
 
     }
+
     private void setUpNavigation() {
         // Set navigation item selected listener
         NV.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -72,12 +102,16 @@ public class Navigation_BaseActivity extends AppCompatActivity {
                     Log.i("menu",str);
                     adapter.clear();
                     list.clear();
-                    if (str == "所有商品") {
 
-                    }
-                    else {
-                        current_category = str;
-                    }
+                    current_category = str;
+
+
+                    adapter.clear();
+                    list.clear();
+                    Log.i("Adapter: ","Clear");
+                    reference_contacts.removeEventListener(fileListener);
+                    reference_contacts.addValueEventListener(fileListener);
+
 
                 }
                 else {//點擊當前項目時，收起Navigation
@@ -88,6 +122,7 @@ public class Navigation_BaseActivity extends AppCompatActivity {
         });
 
     }
+
     public void setUpToolBar() {//設置ToolBar
         setSupportActionBar(toolbar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener(){
