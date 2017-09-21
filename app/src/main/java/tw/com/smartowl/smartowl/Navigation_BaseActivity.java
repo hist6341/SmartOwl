@@ -11,10 +11,17 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
+
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.ArrayList;
 
 /**
  * Created by MING on 2017/8/6.
@@ -26,6 +33,12 @@ public class Navigation_BaseActivity extends AppCompatActivity {
     protected NavigationView NV;
     protected Toolbar toolbar;
     protected int CurrentMenuItem = 0;//紀錄目前User位於哪一個項目
+
+    ArrayAdapter<String> adapter;
+    ArrayList<Product> list = new ArrayList<>();
+    String current_category = "所有商品";
+
+    DatabaseReference reference_contacts = FirebaseDatabase.getInstance().getReference("Products");
 
     @Override
     public void setContentView(@LayoutRes int layoutResID) {
@@ -42,6 +55,7 @@ public class Navigation_BaseActivity extends AppCompatActivity {
         MU.add("書籍區");
         MU.add("生鮮區");
         MU.add("家具區");
+        MU.add("服飾區");
         MU.add("3C區");
 
     }
@@ -50,42 +64,24 @@ public class Navigation_BaseActivity extends AppCompatActivity {
         NV.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem menuItem) {
+                DL.closeDrawer(GravityCompat.START);
+
                 if(!(menuItem == NV.getMenu().getItem(CurrentMenuItem))) {//判斷使者者是否點擊當前畫面的項目，若不是，根據所按的項目做出分別的動作
-                    switch (menuItem.getItemId()) {
 
-                        /*case R.id.navItemOne:
-                            Intent intent = new Intent();
-                            intent.setClass(Navigation_BaseActivity.this, MainActivity.class);
-                            startActivity(intent);
-                            overridePendingTransition(0, 0);
-                            finish();
-                            break;
-                        case R.id.navItemAbout:
-                            intent = new Intent();
-                            intent.setClass(Navigation_BaseActivity.this, MainActivity.class);
-                            startActivity(intent);
-                            overridePendingTransition(0, 0);
-                            finish();
-                            break;
-                        case R.id.navItemLogout:
-                            new AlertDialog.Builder(Navigation_BaseActivity.this)
-                                    .setTitle("Logout")
-                                    .setMessage("Are you sure you want to Logout?")
-                                    .setPositiveButton("Yes", new DialogInterface.OnClickListener()
-                                    {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            finish();
-                                        }
+                    String str = String.valueOf(menuItem.getTitle());
+                    Log.i("menu",str);
+                    adapter.clear();
+                    list.clear();
+                    if (str == "所有商品") {
 
-                                    })
-                                    .setNegativeButton("No", null)
-                                    .show();
-                            break;*/
                     }
+                    else {
+                        current_category = str;
+                    }
+
                 }
                 else {//點擊當前項目時，收起Navigation
-                    DL.closeDrawer(GravityCompat.START);
+                    //DL.closeDrawer(GravityCompat.START);
                 }
                 return false;
             }

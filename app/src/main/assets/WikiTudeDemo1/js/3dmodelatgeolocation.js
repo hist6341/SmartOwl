@@ -18,11 +18,11 @@ var World = {
 
               );
 
-                var modelEarth = new AR.Model("assets/earth.wt3", {
+              var modelEarth = new AR.Model("assets/earth.wt3", {
 
                     scale: {x: 1,y: 1,z: 1}
 
-               });
+              });
               var indicatorImage = new AR.ImageResource("assets/indi.png");
               var indicatorDrawable = new AR.ImageDrawable(indicatorImage, 0.1, {
                     verticalAnchor: AR.CONST.VERTICAL_ANCHOR.TOP
@@ -54,3 +54,4 @@ var World = {
 
 
 }
+World.init();

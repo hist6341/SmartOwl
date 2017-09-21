@@ -22,9 +22,9 @@ public class CreateProduct extends AppCompatActivity {
         setContentView(R.layout.activity_create_product);
         Database = FirebaseDatabase.getInstance().getReference();
     }
-    private void writeNewProduct(String name, int price, String company, String detail) {
+    private void writeNewProduct(String name, int price, String company, String detail, String category) {
         String key = Database.child("Products").push().getKey();
-        Product product = new Product(name, price, company, detail);
+        Product product = new Product(name, price, company, detail, category);
         product.setKey(key);
         Map<String, Object> postValues = product.toMap();
 
@@ -45,7 +45,7 @@ public class CreateProduct extends AppCompatActivity {
         String str3 = company.getText().toString();
         String str4 = detail.getText().toString();
         if (str1 != "" || str2 != "" || str3 != "") {
-            writeNewProduct(str1, Integer.valueOf(str2), str3, str4);
+            writeNewProduct(str1, Integer.valueOf(str2), str3, str4, "");
         }
         finish();
     }

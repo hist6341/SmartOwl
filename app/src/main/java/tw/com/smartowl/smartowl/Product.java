@@ -15,6 +15,7 @@ public class Product {
     public String uid;
     public String name;
     public String company;
+    public String category;
     public int price;
     public int starCount = 0;
     public String detail;
@@ -25,12 +26,13 @@ public class Product {
         // Default constructor required for calls to DataSnapshot.getValue(User.class)
     }
 
-    public Product(String name, int price, String company, String detail) {
+    public Product(String name, int price, String company, String detail, String category) {
         this.name = name;
         this.price = price;
         this.company = company;
         this.detail = detail;
         this.key = key;
+        this.category = category;
     }
 
     public void setKey(String key) {
@@ -45,6 +47,7 @@ public class Product {
         result.put("company", company);
         result.put("detail", detail);
         result.put("key", key);
+        result.put("category",category);
         return result;
     }
 

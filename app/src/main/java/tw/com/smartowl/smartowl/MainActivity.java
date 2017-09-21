@@ -30,8 +30,8 @@ import java.util.ArrayList;
 public class MainActivity extends Navigation_BaseActivity {
 
     private String TAG = "MainActivity";
-    private ArrayList<Product> list = new ArrayList<>();
-    ArrayAdapter<String> adapter;
+
+
     DatabaseReference reference_contacts = FirebaseDatabase.getInstance().getReference("Products");
 
     //private ViewPager myViewPager;
@@ -113,10 +113,20 @@ public class MainActivity extends Navigation_BaseActivity {
             Log.i("Adapter: ","Clear");
             for (DataSnapshot ds : dataSnapshot.getChildren() ){
                 Product product = ds.getValue(Product.class);
-                adapter.add(ds.child("name").getValue().toString());
-                Log.i("Key",ds.child("name").getValue().toString());
+                if (current_category == "所有商品") {
+                    adapter.add(ds.child("name").getValue().toString());
+                    Log.i("Key",ds.child("name").getValue().toString());
+                    list.add(product);
+                }
 
-                list.add(product);
+                else {
+                    if (product.category == current_category) {
+                        adapter.add(ds.child("name").getValue().toString());
+                        Log.i("Key",ds.child("name").getValue().toString());
+                        list.add(product);
+                    }
+                }
+
             }
         }
 
