@@ -96,8 +96,8 @@ public class Navigation_BaseActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(MenuItem menuItem) {
                 DL.closeDrawer(GravityCompat.START);
 
-                if(!(menuItem == NV.getMenu().getItem(CurrentMenuItem))) {//判斷使者者是否點擊當前畫面的項目，若不是，根據所按的項目做出分別的動作
-                    Log.i("Current Item",String.valueOf(menuItem.getGroupId()));
+                if(!(Objects.equals(current_category,String.valueOf(menuItem.getTitle())))) {//判斷使者者是否點擊當前畫面的項目，若不是，根據所按的項目做出分別的動作
+                    Log.i("Current Item",String.valueOf(menuItem.getTitle()));
                     String str = String.valueOf(menuItem.getTitle());
                     Log.i("menu",str);
                     adapter.clear();

@@ -2,6 +2,7 @@ package tw.com.smartowl.smartowl;
 
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,8 +19,10 @@ import android.widget.ListView;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.Objects;
 
-public class MainActivity extends Navigation_BaseActivity {
+
+public class MainActivity extends Navigation_BaseActivity{
 
     DatabaseReference reference_contacts = FirebaseDatabase.getInstance().getReference("Products");
     EditText search_text;
@@ -76,68 +79,69 @@ public class MainActivity extends Navigation_BaseActivity {
         search_button.setOnClickListener(new ImageButton.OnClickListener() {
             @Override
             public void onClick(View v) {
-                search_text.setVisibility(View.VISIBLE);
-                search_button.setVisibility(View.GONE);
-                search_text.setCursorVisible(true);
-                search_text.setSelected(true);
-                search_text.requestFocus();
+                if (Objects.equals("",search_text.getText().toString())) {
+                        new AlertDialog.Builder(MainActivity.this)
+                                .setMessage("請輸入內容")
+                                .setIcon(android.R.drawable.ic_dialog_alert)
+                                .setTitle("警告")
+                                .setPositiveButton("確認", null)
+                                .show();
 
+                }
+                else {
+                    Intent it = new Intent(MainActivity.this, SearchActivity.class);
+                    it.putExtra("Name", search_text.getText().toString());
+                    startActivity(it);
+                }
             }
         }
         );
 
     }
-
-
-
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
-        Log.i("touch action","");
+        View currentFocus;
+
         //don't click on edit text then hide keyboard and hide cursor
         if (ev.getAction() == MotionEvent.ACTION_UP) {
+            currentFocus = getCurrentFocus();
+            Log.i("Current focus",String.valueOf(currentFocus));
 
-            View currentFocus = getCurrentFocus();
-            Log.i("touch action up",String.valueOf(currentFocus));
-            if (currentFocus != null) {
-                boolean pressed = currentFocus.isPressed();
+            if (currentFocus == search_text) {
+                boolean selected = search_text.isSelected();
                 //don't click on edit text
-                if (!pressed) {
-                    if(currentFocus instanceof EditText) {
-                        hideSoftKeyboard();
-                        getWindow().getDecorView().requestFocus();
-                        ((EditText) currentFocus).setCursorVisible(false);
-                        search_text.setVisibility(View.GONE);
-                        search_button.setVisibility(View.VISIBLE);
-                        Log.i("clear focus", "");
-                    }
+                if (selected) {
+                    boolean pressed = search_text.isPressed();
+                    if (pressed) search_text.setCursorVisible(true);
+
+                }
+                else {
+                    hideSoftKeyboard();
+                    search_text.setCursorVisible(false);
                 }
             }
+
         }
         boolean b = super.dispatchTouchEvent(ev);
 
         //focus is newest after dispatch event
         //click on edit text then show keyboard and show cursor
         if (ev.getAction() == MotionEvent.ACTION_DOWN) {
-            View currentFocus = getCurrentFocus();
-            Log.i("touch action down",String.valueOf(currentFocus));
-            if (currentFocus != null) {
-                boolean pressed = currentFocus.isPressed();
-                //click on edit text
-                if (pressed) {
-                    if (currentFocus instanceof EditText)
-                        ((EditText) currentFocus).setCursorVisible(true);
-                }
-            }
+
+
         }
         return b;
     }
 
     protected void hideSoftKeyboard() {
-        if (this.getCurrentFocus() != null) {
+
             InputMethodManager inputMethodManager = (InputMethodManager) this.getSystemService(Activity.INPUT_METHOD_SERVICE);
             inputMethodManager.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), 0);
-        }
+
     }
+
+
+
 
 
     ////////////////////////////////////////////////////////////////////////////////////////

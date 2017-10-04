@@ -4,12 +4,14 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Spinner;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class CreateProduct extends AppCompatActivity {
 
@@ -40,12 +42,15 @@ public class CreateProduct extends AppCompatActivity {
         EditText price = (EditText) findViewById(R.id.new_price);
         EditText company = (EditText) findViewById(R.id.new_company);
         EditText detail = (EditText) findViewById(R.id.new_detail);
+        Spinner category = (Spinner) findViewById(R.id.new_category);
         String str1 = name.getText().toString();
         String str2 = price.getText().toString();
         String str3 = company.getText().toString();
         String str4 = detail.getText().toString();
-        if (str1 != "" || str2 != "" || str3 != "") {
-            writeNewProduct(str1, Integer.valueOf(str2), str3, str4, "");
+        String[] category_str = getResources().getStringArray(R.array.product_category);
+        String str5 = category_str[category.getSelectedItemPosition()];
+        if (!Objects.equals(str1, "") || !Objects.equals(str2, "") || !Objects.equals(str3, "")) {
+            writeNewProduct(str1, Integer.valueOf(str2), str3, str4, str5);
         }
         finish();
     }

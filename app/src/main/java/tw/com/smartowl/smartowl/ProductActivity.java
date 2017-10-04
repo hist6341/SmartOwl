@@ -24,7 +24,7 @@ public class ProductActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product);
-        getKey();
+        get_Intent();
         reference_contacts = FirebaseDatabase.getInstance().getReference("Products");
 
          mSnapShot = new ValueEventListener() {
@@ -57,20 +57,20 @@ public class ProductActivity extends AppCompatActivity {
     @Override
     public void onStart(){
         super.onStart();
-        getKey();
+        get_Intent();
         reference_contacts.addValueEventListener(mSnapShot);
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        getKey();
+        get_Intent();
         reference_contacts.removeEventListener(mSnapShot);
     }
     @Override
     public void onResume() {
         super.onResume();
-        getKey();
+        get_Intent();
         reference_contacts.addValueEventListener(mSnapShot);
     }
 
@@ -85,7 +85,7 @@ public class ProductActivity extends AppCompatActivity {
         txv_price.setText(single_product.price + " 元");
         txv_detail.setText(single_product.detail);
     }
-    private void getKey() {
+    private void get_Intent() {
         Intent it = getIntent();
         key = it.getStringExtra("ID");
     }

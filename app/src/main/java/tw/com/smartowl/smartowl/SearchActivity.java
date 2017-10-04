@@ -1,0 +1,86 @@
+package tw.com.smartowl.smartowl;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.Objects;
+
+public class SearchActivity extends AppCompatActivity {
+
+    DatabaseReference reference_contacts;
+    ArrayList<Product> list = new ArrayList<>();
+    ArrayAdapter<String> adapter;
+    ListView listView;
+    private String search_name;
+    ValueEventListener fileListener =new ValueEventListener() {
+        @Override
+        public void onDataChange(DataSnapshot dataSnapshot) {
+            adapter.clear();
+            list.clear();
+            Log.i("Adapter: ","Clear");
+            for (DataSnapshot ds : dataSnapshot.getChildren() ){
+                Product product = ds.getValue(Product.class);
+
+                if (Objects.equals(product.name, search_name)) {
+                    adapter.add(ds.child("name").getValue().toString());
+                    Log.i("Key", ds.child("name").getValue().toString());
+                    list.add(product);
+                }
+
+
+
+            }
+        }
+
+        @Override
+        public void onCancelled(DatabaseError databaseError) {
+
+        }
+
+    };
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_search);
+        listView = (ListView) findViewById(R.id.list);
+        get_Intent();
+        reference_contacts = FirebaseDatabase.getInstance().getReference("Products");
+
+        adapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_list_item_1,
+                android.R.id.text1);
+        listView.setAdapter(adapter);
+        reference_contacts.addValueEventListener(fileListener);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView arg0, View arg1, int arg2, long arg3) {
+                ListView listView = (ListView) arg0;
+                Intent it = new Intent(SearchActivity.this,ProductActivity.class);
+                Product product = list.get(arg2);
+                Log.i("OnClick: ",product.key);
+                it.putExtra("ID", product.key.toString());
+                //it.putExtra("產品",listView.getItemAtPosition(arg2).toString());
+                startActivity(it);
+            }
+        });
+    }
+
+    private void get_Intent() {
+        Intent it = getIntent();
+        search_name = it.getStringExtra("Name");
+    }
+}
