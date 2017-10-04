@@ -21,8 +21,9 @@
         android:choiceMode="singleChoice"
         android:divider="@android:color/transparent"
         android:dividerHeight="0dp"
+        app:headerLayout="@layout/drawer_header"
         app:itemIconTint="@color/black"
         app:itemTextColor="@color/black"
-        app:menu="@menu/menu_navigation" />
+        app:menu="@menu/menu_navigation"/>
 
 </android.support.v4.widget.DrawerLayout>
