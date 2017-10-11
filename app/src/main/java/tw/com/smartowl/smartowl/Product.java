@@ -21,6 +21,7 @@ public class Product {
     public String detail;
     public String key;
     public int quantity = 0;
+    public String armodel;
     //public Map<String, Boolean> stars = new HashMap<>();
     public Product() {
         // Default constructor required for calls to DataSnapshot.getValue(User.class)
@@ -48,6 +49,7 @@ public class Product {
         result.put("detail", detail);
         result.put("key", key);
         result.put("category",category);
+        result.put("armodel",armodel);
         return result;
     }
 

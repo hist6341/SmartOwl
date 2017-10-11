@@ -52,7 +52,9 @@ public class ProductActivity extends AppCompatActivity {
     }
 
     public void go_wikitude(View v) {
-        startActivity(new Intent(this,WikitudeActivity.class));
+        Intent it = new Intent(ProductActivity.this, WikitudeActivity.class);
+        it.putExtra("ARModel", single_product.armodel);
+        startActivity(it);
     }
     @Override
     public void onStart(){

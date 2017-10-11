@@ -16,7 +16,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class SearchActivity extends AppCompatActivity {
 
@@ -30,11 +29,9 @@ public class SearchActivity extends AppCompatActivity {
         public void onDataChange(DataSnapshot dataSnapshot) {
             adapter.clear();
             list.clear();
-            Log.i("Adapter: ","Clear");
             for (DataSnapshot ds : dataSnapshot.getChildren() ){
                 Product product = ds.getValue(Product.class);
-
-                if (Objects.equals(product.name, search_name)) {
+                if (product.name.indexOf(search_name) >= 0) {
                     adapter.add(ds.child("name").getValue().toString());
                     Log.i("Key", ds.child("name").getValue().toString());
                     list.add(product);

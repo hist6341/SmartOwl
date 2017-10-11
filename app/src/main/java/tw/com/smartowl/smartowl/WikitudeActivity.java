@@ -1,5 +1,6 @@
 package tw.com.smartowl.smartowl;
 
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
@@ -21,11 +22,15 @@ public class WikitudeActivity extends AppCompatActivity implements LocationListe
     boolean isGPSEnabled;
     boolean isNetworkEnabled;
     LocationManager mgr;
+    String armodel ;
+    double x, y, z, user_x=0, user_y=0, user_z=0;
     private ArchitectView architectView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wikitude);
+        get_Intent();
         mgr = (LocationManager) getSystemService(LOCATION_SERVICE);
 
 
@@ -33,7 +38,6 @@ public class WikitudeActivity extends AppCompatActivity implements LocationListe
         final ArchitectStartupConfiguration config = new ArchitectStartupConfiguration();
         config.setLicenseKey("m9CCuHsymIckyC4EwFnygetekcju9ZlJXD/vSaGvjVIJe+Kc55m9Rk53xvCK7eHDcZ6sWTc+GKvszlyVh0tqQF0hbNn6ZMipChqZ5EPA/ushMM1hR85tQ8UmGmepNJ78FDOHQJkAN2+/d4iprENGGls6apmQ94hIFMeotkWDFopTYWx0ZWRfX/ojMThqAa62CA2Oj/wF/z+S6MDvLlTg5yqNDSmMUKRuIXhKLwfjSKL5QEwW6uiZlyKhQSbdvILxE3JE5s3yHuudEHg0WFi9RRO9nrfc+cTe2ZSJJv87z99kuVawKi8/FGyh63tTF1Qty+YuPkcYAD5EUgfI+46moNJIV35ZJkYtD9VgG7A+RjqQW7kMXQCry6KyccKAVPGFMPG1umEelDXzj5JOXNsMfibBOIQGa798D9fjPdHuWSti86Ab5XJ2PT7XxnlItcmt7uQ1qQ0BXDRl4JHpBD/iE0Vg0QTJ9csxKM7BcG1ROAQhjYm5YOu2z4TFncWnGmxyZkngLbpVf7VcvraY6V6M6IWA3b2wBC5H9zZFOuKQrtppqpWqihVY0p/GiboDIVY8tIHAfUyE5pdRjmEydowlMmvonVuCpUpAfyeEle68cnJcaizFXLXjJNfp0Cl1lebVJqukt8U1hjWGZm28TMj9clbpIrWEmw0N3YCGfFreG7c=");
         this.architectView.onCreate( config );
-
     }
 
     @Override
@@ -57,8 +61,6 @@ public class WikitudeActivity extends AppCompatActivity implements LocationListe
 
     }
 
-
-
     @Override
     protected void onDestroy(){
         super.onDestroy();
@@ -73,8 +75,6 @@ public class WikitudeActivity extends AppCompatActivity implements LocationListe
         architectView.onPause();
     }
 
-
-    double x, y, z, user_x=0, user_y=0, user_z=0;
     public void changeloc(View v) {
         user_x = x;
         user_y = y;
@@ -89,6 +89,8 @@ public class WikitudeActivity extends AppCompatActivity implements LocationListe
     public void getid() {
         //user_x += 10;
         //architectView.callJavascript("var modelEarth = new AR.Model(\"assets/earth.wt3\", {scale: {x: 1,y: 1,z: 1}});");
+        architectView.callJavascript("modelcase = 'assets/"+armodel+".wt3'");
+        Log.i("ARModel","modelcase = 'assets/"+armodel+".wt3'");
         architectView.callJavascript("World.init()");
     }
 
@@ -131,7 +133,7 @@ public class WikitudeActivity extends AppCompatActivity implements LocationListe
         dis_x += dis_y;
         //user_x =+ 10;
         if((dis_x) <= 0.00000001 )
-            architectView.setLocation(x,y,z);
+            //architectView.setLocation(x,y,z);
 
         Log.i(dis_x+","+dis_y,user_x + "," + user_y);
         user_x = x;
@@ -154,5 +156,9 @@ public class WikitudeActivity extends AppCompatActivity implements LocationListe
     @Override
     public void onProviderDisabled(String provider) {
 
+    }
+    private void get_Intent() {
+        Intent it = getIntent();
+        armodel = it.getStringExtra("ARModel");
     }
 }

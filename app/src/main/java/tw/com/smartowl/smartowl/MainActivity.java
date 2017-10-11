@@ -82,7 +82,7 @@ public class MainActivity extends Navigation_BaseActivity{
                 if (Objects.equals("",search_text.getText().toString())) {
                         new AlertDialog.Builder(MainActivity.this)
                                 .setMessage("請輸入內容")
-                                .setIcon(android.R.drawable.ic_dialog_alert)
+                                //.setIcon(android.R.drawable.ic_dialog_alert)
                                 .setTitle("警告")
                                 .setPositiveButton("確認", null)
                                 .show();
