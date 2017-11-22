@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -53,12 +52,12 @@ public class MainActivity extends Navigation_BaseActivity{
 
         ///////////////////////////////////////////////////////////////////////////
 
-        adapter = new ArrayAdapter<String>(this,
+        /*adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1,
-                android.R.id.text1);
+                android.R.id.text1);*/
 
         ListView listView = (ListView) findViewById(R.id.list);
-
+        adapter = new CustomAdapter(this,list);
         listView.setAdapter(adapter);
 
         reference_contacts.addValueEventListener(fileListener);

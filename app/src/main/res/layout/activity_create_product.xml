@@ -109,6 +109,23 @@
                 tools:layout_editor_absoluteX="8dp"
                 tools:layout_editor_absoluteY="321dp" />
         </android.support.design.widget.TextInputLayout>
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <EditText
+                android:id="@+id/new_jpg"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/edittext_round"
+                android:hint="圖片位址(https://)"
+                android:inputType="text"
+                android:paddingLeft="10dp"
+                android:textColorLink="@android:color/black"
+                tools:layout_editor_absoluteX="8dp"
+                tools:layout_editor_absoluteY="145dp" />
+        </android.support.design.widget.TextInputLayout>
 
     </LinearLayout>
 

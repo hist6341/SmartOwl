@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.google.firebase.database.DataSnapshot;
@@ -21,7 +20,7 @@ public class SearchActivity extends AppCompatActivity {
 
     DatabaseReference reference_contacts;
     ArrayList<Product> list = new ArrayList<>();
-    ArrayAdapter<String> adapter;
+    CustomAdapter adapter;
     ListView listView;
     private String search_name;
     ValueEventListener fileListener =new ValueEventListener() {
@@ -32,8 +31,8 @@ public class SearchActivity extends AppCompatActivity {
             for (DataSnapshot ds : dataSnapshot.getChildren() ){
                 Product product = ds.getValue(Product.class);
                 if (product.name.indexOf(search_name) >= 0) {
-                    adapter.add(ds.child("name").getValue().toString());
-                    Log.i("Key", ds.child("name").getValue().toString());
+                    adapter.add(product);
+                    Log.i("Key",ds.child("name").getValue().toString());
                     list.add(product);
                 }
 
@@ -57,9 +56,7 @@ public class SearchActivity extends AppCompatActivity {
         get_Intent();
         reference_contacts = FirebaseDatabase.getInstance().getReference("Products");
 
-        adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1,
-                android.R.id.text1);
+        adapter = new CustomAdapter(this,list);
         listView.setAdapter(adapter);
         reference_contacts.addValueEventListener(fileListener);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

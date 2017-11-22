@@ -40,7 +40,7 @@ var World = {
         var indicatorImage = new AR.ImageResource("assets/indi.png");
 
         var indicatorDrawable = new AR.ImageDrawable(indicatorImage, 0.1, {
-            verticalAnchor: AR.CONST.VERTICAL_ANCHOR.TOP
+            verticalAnchor: AR.CONST.VERTICAL_ANCHOR.CENTER
         });
 
 		/*

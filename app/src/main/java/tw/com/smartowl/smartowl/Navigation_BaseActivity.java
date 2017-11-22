@@ -11,7 +11,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -30,8 +29,9 @@ public class Navigation_BaseActivity extends AppCompatActivity {
     protected NavigationView NV;
     protected Toolbar toolbar;
     protected int CurrentMenuItem = 0;//紀錄目前User位於哪一個項目
-    ArrayAdapter<String> adapter;
+    //ArrayAdapter<String> adapter;
     ArrayList<Product> list = new ArrayList<>();
+    CustomAdapter adapter;
     String current_category = "所有商品";
     DatabaseReference reference_contacts = FirebaseDatabase.getInstance().getReference("Products");
     DataSnapshot dataSnapshot;
@@ -44,14 +44,14 @@ public class Navigation_BaseActivity extends AppCompatActivity {
             for (DataSnapshot ds : dataSnapshot.getChildren() ){
                 Product product = ds.getValue(Product.class);
                 if (Objects.equals(current_category, "所有商品")) {
-                    adapter.add(ds.child("name").getValue().toString());
+                    adapter.add(product);
                     Log.i("Key",ds.child("name").getValue().toString());
                     list.add(product);
                 }
 
                 else {
                     if (Objects.equals(product.category, current_category)) {
-                        adapter.add(ds.child("name").getValue().toString());
+                        adapter.add(product);
                         Log.i("Key",ds.child("name").getValue().toString());
                         list.add(product);
                     }

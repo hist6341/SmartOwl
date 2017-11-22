@@ -1,4 +1,6 @@
-var modelcase = '';
+var modelcase = 'assets/earth.wt3';
+var scalexyz = 1;
+
 
 
 var World = {
@@ -29,9 +31,9 @@ var World = {
 		var modelEarth = new AR.Model(modelcase, {
 			onLoaded: this.worldLoaded,
 			scale: {
-				x: 1,
-				y: 1,
-				z: 1
+				x: scalexyz,
+				y: scalexyz,
+				z: scalexyz
 			}
 		});
 

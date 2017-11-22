@@ -22,18 +22,20 @@ public class Product {
     public String key;
     public int quantity = 0;
     public String armodel;
+    public String jpg;
     //public Map<String, Boolean> stars = new HashMap<>();
     public Product() {
         // Default constructor required for calls to DataSnapshot.getValue(User.class)
     }
 
-    public Product(String name, int price, String company, String detail, String category) {
+    public Product(String name, int price, String company, String detail, String category, String jpg) {
         this.name = name;
         this.price = price;
         this.company = company;
         this.detail = detail;
         this.key = key;
         this.category = category;
+        this.jpg = jpg;
     }
 
     public void setKey(String key) {
@@ -50,6 +52,7 @@ public class Product {
         result.put("key", key);
         result.put("category",category);
         result.put("armodel",armodel);
+        result.put("jpg",jpg);
         return result;
     }
 
