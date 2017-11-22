@@ -1,10 +1,15 @@
 package tw.com.smartowl.smartowl;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
@@ -12,9 +17,11 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 public class ProductActivity extends AppCompatActivity {
     DatabaseReference reference_contacts;
+    Context c;
     String TAG = "ProductActivity";
     String key;
     Product single_product;
@@ -24,6 +31,9 @@ public class ProductActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_product);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         get_Intent();
         reference_contacts = FirebaseDatabase.getInstance().getReference("Products");
 
@@ -78,7 +88,16 @@ public class ProductActivity extends AppCompatActivity {
         get_Intent();
         reference_contacts.addValueEventListener(mSnapShot);
     }
-
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 
     public void setView() {
         TextView txv_name = (TextView)findViewById(R.id.product_name);
@@ -89,6 +108,14 @@ public class ProductActivity extends AppCompatActivity {
         txv_company.setText(single_product.company);
         txv_price.setText(single_product.price + " 元");
         txv_detail.setText(single_product.detail);
+
+        CollapsingToolbarLayout collapsingToolbar =
+                (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
+        collapsingToolbar.setTitle(single_product.name);
+        collapsingToolbar.setExpandedTitleColor(getResources().getColor(R.color.black));
+        ImageView backdrop = (ImageView)findViewById(R.id.backdrop);
+        String url = single_product.jpg;
+        Picasso.with(c).load(url).into(backdrop);
     }
     private void get_Intent() {
         Intent it = getIntent();

@@ -151,7 +151,7 @@ public class WikitudeActivity extends AppCompatActivity implements LocationListe
                     Toast.makeText(this,"請確認已開啟定位功能！",Toast.LENGTH_LONG).show();
                 }
                 else {
-                    Toast.makeText(this,"取得定位資訊中...",Toast.LENGTH_LONG).show();
+                    //Toast.makeText(this,"取得定位資訊中...",Toast.LENGTH_LONG).show();
                     if (isGPSEnabled)
                         mgr.requestLocationUpdates(LocationManager.GPS_PROVIDER,MIN_TIME,MIN_DIST,this);
                     if (isNetworkEnabled)
