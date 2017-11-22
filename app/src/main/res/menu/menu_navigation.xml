@@ -1,4 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <group android:checkableBehavior="single"></group>
+    <group>
+        <item
+            android:icon="@drawable/house"
+            android:title="首頁" />
+    </group>
+
+    <item android:title="商品分區">
+        <menu>
+            <group>
+                <item
+                    android:icon="@drawable/toolbar_menu"
+                    android:title="所有商品" />
+                <item
+                    android:icon="@drawable/toolbar_menu"
+                    android:title="食物區" />
+                <item
+                    android:icon="@drawable/toolbar_menu"
+                    android:title="書籍區" />
+                <item
+                    android:icon="@drawable/toolbar_menu"
+                    android:title="生鮮區" />
+                <item
+                    android:icon="@drawable/toolbar_menu"
+                    android:title="家具區" />
+                <item
+                    android:icon="@drawable/toolbar_menu"
+                    android:title="服飾區" />
+                <item
+                    android:icon="@drawable/toolbar_menu"
+                    android:title="3C區" />
+            </group>
+        </menu>
+    </item>
+
 </menu>

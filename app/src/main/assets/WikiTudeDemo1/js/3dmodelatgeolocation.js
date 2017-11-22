@@ -1,5 +1,7 @@
 var modelcase = 'assets/earth.wt3';
 var scalexyz = 1;
+var nowLat, nowLong, nowAlt;
+
 
 
 
@@ -18,12 +20,14 @@ var World = {
     },
 
 
+
+
 	createModelAtLocation: function createModelAtLocationFn() {
 
 		/*
 			First a location where the model should be displayed will be defined. This location will be relativ to the user.
 		*/
-		var location = new AR.RelativeLocation(null, 5, 1, 1);
+		var location = new AR.GeoLocation(nowLat,nowLong,nowAlt);
 
 		/*
 			Next the model object is loaded.
@@ -52,6 +56,13 @@ var World = {
                indicator: [indicatorDrawable]
             }
         });
+
+        AR.context.onLocationChanged = function(latitude, longitude, altitude, accuracy){
+
+            nowLat = latitude;
+            nowLong = longitude;
+            nowAlt = altitude;
+        };
 	}
 
 

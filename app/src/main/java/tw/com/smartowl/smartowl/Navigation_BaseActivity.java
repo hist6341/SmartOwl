@@ -43,7 +43,7 @@ public class Navigation_BaseActivity extends AppCompatActivity {
             Log.i("Adapter: ","Clear");
             for (DataSnapshot ds : dataSnapshot.getChildren() ){
                 Product product = ds.getValue(Product.class);
-                if (Objects.equals(current_category, "所有商品")) {
+                if (Objects.equals(current_category, "所有商品") || Objects.equals(current_category, "首頁")) {
                     adapter.add(product);
                     Log.i("Key",ds.child("name").getValue().toString());
                     list.add(product);
@@ -79,13 +79,13 @@ public class Navigation_BaseActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.ToolBar);
         setUpNavigation();
         MU = NV.getMenu();
-        MU.add("所有商品");
+        /*MU.add("所有商品");
         MU.add("食物區");
         MU.add("書籍區");
         MU.add("生鮮區");
         MU.add("家具區");
         MU.add("服飾區");
-        MU.add("3C區");
+        MU.add("3C區");*/
 
     }
 

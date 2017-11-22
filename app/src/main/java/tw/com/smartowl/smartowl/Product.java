@@ -20,9 +20,12 @@ public class Product {
     public int starCount = 0;
     public String detail;
     public String key;
-    public int quantity = 0;
     public String armodel;
     public String jpg;
+    public double nowlat;
+    public double nowlong;
+    public double nowalt;
+
     //public Map<String, Boolean> stars = new HashMap<>();
     public Product() {
         // Default constructor required for calls to DataSnapshot.getValue(User.class)
@@ -33,7 +36,6 @@ public class Product {
         this.price = price;
         this.company = company;
         this.detail = detail;
-        this.key = key;
         this.category = category;
         this.jpg = jpg;
     }
@@ -53,6 +55,9 @@ public class Product {
         result.put("category",category);
         result.put("armodel",armodel);
         result.put("jpg",jpg);
+        result.put("nowlat",nowlat);
+        result.put("nowlong",nowlong);
+        result.put("nowalt",nowalt);
         return result;
     }
 

@@ -54,6 +54,9 @@ public class ProductActivity extends AppCompatActivity {
     public void go_wikitude(View v) {
         Intent it = new Intent(ProductActivity.this, WikitudeActivity.class);
         it.putExtra("ARModel", single_product.armodel);
+        it.putExtra("Lat",String.valueOf(single_product.nowlat));
+        it.putExtra("Long",String.valueOf(single_product.nowlong));
+        it.putExtra("Alt",String.valueOf(single_product.nowalt));
         startActivity(it);
     }
     @Override

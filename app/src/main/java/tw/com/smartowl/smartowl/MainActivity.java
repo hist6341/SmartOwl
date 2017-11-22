@@ -6,10 +6,9 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -37,7 +36,7 @@ public class MainActivity extends Navigation_BaseActivity{
         search_text = (EditText) findViewById(R.id.Search_Edittext);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+        //getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
         //myViewPager = (ViewPager) findViewById(R.id.myViewPager);
         //tabLayout = (TabLayout) findViewById(R.id.TabLayout);
@@ -56,7 +55,7 @@ public class MainActivity extends Navigation_BaseActivity{
                 android.R.layout.simple_list_item_1,
                 android.R.id.text1);*/
 
-        ListView listView = (ListView) findViewById(R.id.list);
+        final ListView listView = (ListView) findViewById(R.id.list);
         adapter = new CustomAdapter(this,list);
         listView.setAdapter(adapter);
 
@@ -93,54 +92,52 @@ public class MainActivity extends Navigation_BaseActivity{
                     startActivity(it);
                 }
             }
-        }
-        );
+        });
 
-    }
-    @Override
-    public boolean dispatchTouchEvent(MotionEvent ev) {
-        View currentFocus;
 
-        //don't click on edit text then hide keyboard and hide cursor
-        if (ev.getAction() == MotionEvent.ACTION_UP) {
-            currentFocus = getCurrentFocus();
-            Log.i("Current focus",String.valueOf(currentFocus));
-
-            if (currentFocus == search_text) {
-                boolean selected = search_text.isSelected();
-                //don't click on edit text
-                if (selected) {
-                    boolean pressed = search_text.isPressed();
-                    if (pressed) search_text.setCursorVisible(true);
-
-                }
-                else {
-                    hideSoftKeyboard();
-                    search_text.setCursorVisible(false);
-                }
+        listView.setOnScrollListener(new ListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+                //Log.i("onScrollStateChanged", "00000");
+                InputMethodManager inputMethodManager = (InputMethodManager) MainActivity.this.getSystemService(Activity.INPUT_METHOD_SERVICE);
+                inputMethodManager.hideSoftInputFromWindow(MainActivity.this.getCurrentFocus().getWindowToken(), 0);
+                //Log.i("00000", this.getCurrentFocus().toString());
+                listView.requestFocus();
             }
 
-        }
-        boolean b = super.dispatchTouchEvent(ev);
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
 
-        //focus is newest after dispatch event
-        //click on edit text then show keyboard and show cursor
-        if (ev.getAction() == MotionEvent.ACTION_DOWN) {
-
-
-        }
-        return b;
-    }
-
-    protected void hideSoftKeyboard() {
-
-            InputMethodManager inputMethodManager = (InputMethodManager) this.getSystemService(Activity.INPUT_METHOD_SERVICE);
-            inputMethodManager.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), 0);
+            }
+        });
 
     }
 
+    /*@Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        View currentFocus;
+        LinearLayout tool_linear = (LinearLayout) findViewById(R.id.toolbar_linear);
+
+        //don't click on edit text then hide keyboard and hide cursor
+
+        if (ev.getAction() == MotionEvent.ACTION_MOVE) {
+
+            if (search_text.isFocused()){
+
+                InputMethodManager inputMethodManager = (InputMethodManager) this.getSystemService(Activity.INPUT_METHOD_SERVICE);
+                inputMethodManager.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), 0);
+                Log.i("00000", this.getCurrentFocus().toString());
+                tool_linear.requestFocus();
+            }
+            tool_linear.requestFocus();
+
+        }
 
 
+
+        boolean x = super.dispatchTouchEvent(ev);
+        return x;
+    }*/
 
 
     ////////////////////////////////////////////////////////////////////////////////////////

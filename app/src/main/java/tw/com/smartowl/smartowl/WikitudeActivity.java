@@ -28,19 +28,27 @@ public class WikitudeActivity extends AppCompatActivity implements LocationListe
     static final float MIN_DIST = 0;
     boolean isGPSEnabled;
     boolean isNetworkEnabled;
+    boolean isARWorldLoaded = false;
+    boolean isARLocationLoaded = false;
     LocationManager mgr;
-    String armodel ;
+    String armodel, modelLat, modelLong, modelAlt ;
+    Product single_product;
     double x, y, z, user_x=0, user_y=0, user_z=0;
-    DatabaseReference reference_contacts = FirebaseDatabase.getInstance().getReference("3DModels");
+    DatabaseReference Models_reference = FirebaseDatabase.getInstance().getReference("3DModels");
+    DatabaseReference Products_reference = FirebaseDatabase.getInstance().getReference("Products");
     private ArchitectView architectView;
-    ValueEventListener fileListener =new ValueEventListener() {
+    ValueEventListener modelListener =new ValueEventListener() {
         @Override
         public void onDataChange(DataSnapshot dataSnapshot) {
             for (DataSnapshot ds : dataSnapshot.getChildren() ){
                 if (Objects.equals(armodel, ds.child("name").getValue().toString())){
                     architectView.callJavascript("scalexyz = " + ds.child("scalexyz").getValue().toString());
                     architectView.callJavascript("modelcase = 'assets/"+armodel+".wt3'");
+                    architectView.callJavascript("nowLat = " + modelLat );
+                    architectView.callJavascript("nowLong = " + modelLong);
+                    architectView.callJavascript("nowAlt = " + modelAlt);
                     architectView.callJavascript("World.init()");
+                    isARWorldLoaded = true;
                 }
 
 
@@ -59,7 +67,7 @@ public class WikitudeActivity extends AppCompatActivity implements LocationListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wikitude);
         get_Intent();
-        reference_contacts.addValueEventListener(fileListener);
+        Models_reference.addValueEventListener(modelListener);
 
 
         this.architectView = (ArchitectView)this.findViewById( R.id.architectView );
@@ -77,6 +85,7 @@ public class WikitudeActivity extends AppCompatActivity implements LocationListe
         architectView.onPostCreate();
         try {
             this.architectView.load( "file:///android_asset/WikiTudeDemo1/index.html" );
+            isARWorldLoaded = true;
             Log.i("Wikitude","loaded");
             //getid();
         } catch (Exception  e){
@@ -103,7 +112,7 @@ public class WikitudeActivity extends AppCompatActivity implements LocationListe
         super.onDestroy();
         enableLocationUpdates(false);
         architectView.onDestroy();
-        reference_contacts.removeEventListener(fileListener);
+        Models_reference.removeEventListener(modelListener);
 
     }
 
@@ -163,20 +172,13 @@ public class WikitudeActivity extends AppCompatActivity implements LocationListe
         y = location.getLongitude();
         z = location.getAltitude();
 
-        double dis_x, dis_y;
-        dis_x = x - user_x;
-        dis_y = y - user_y;
-        dis_x *= dis_x;
-        dis_y *= dis_y;
-        dis_x += dis_y;
-        //user_x =+ 10;
-        if((dis_x) <= 0.00000001 )
-            //architectView.setLocation(x,y,z);
+        if (isARWorldLoaded) {
+            architectView.setLocation(x,y,z);
+            //architectView.callJavascript("LocationSet("+location.getLatitude() + ", " + location.getLongitude() + ", " + location.getLongitude() + ")");
+        }
 
-        Log.i(dis_x+","+dis_y,user_x + "," + user_y);
-        user_x = x;
-        user_y = y;
-        user_z = z;
+
+        Log.i("GPSLocation",x + ", " + y + ", " + z);
 
 
     }
@@ -198,5 +200,8 @@ public class WikitudeActivity extends AppCompatActivity implements LocationListe
     private void get_Intent() {
         Intent it = getIntent();
         armodel = it.getStringExtra("ARModel");
+        modelLat = it.getStringExtra("Lat");
+        modelLong = it.getStringExtra("Long");
+        modelAlt = it.getStringExtra("Alt");
     }
 }
